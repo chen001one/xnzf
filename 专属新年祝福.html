@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新年快乐 - 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0033 0%, #330033 50%, #1a0033 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 烟花背景 */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px;
+            animation: fireworkExplode 2s ease-out forwards;
+        }
+        
+        @keyframes fireworkExplode {
+            0% {
+                opacity: 1;
+                transform: translateY(100vh);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(0) scale(3);
+            }
+        }
+        
+        /* 顶部标题 */
+        .header {
+            text-align: center;
+            padding: 40px 0 20px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px #ff3366;
+            background: linear-gradient(to right, #ff3366, #ffcc00, #33ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        /* 主要祝福语区域 */
+        .main-message {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-message::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff3366, #ffcc00, #33ccff);
+        }
+        
+        .typing-text {
+            font-size: 2.2rem;
+            line-height: 1.6;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .typing-text .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.2rem;
+            background-color: #ffcc00;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .year {
+            font-size: 8rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 30px #ff3366;
+            color: #ffcc00;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        
+        /* 飘落的祝福卡片 */
+        .floating-cards {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 10px;
+            width: 180px;
+            text-align: center;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: floatCard linear forwards;
+        }
+        
+        @keyframes floatCard {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* 祝福语生成器 */
+        .wish-generator {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .wish-generator h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffcc00;
+            font-size: 2rem;
+        }
+        
+        .wish-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .wish-btn {
+            padding: 12px 25px;
+            background: rgba(255, 51, 102, 0.8);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        }
+        
+        .wish-btn:hover {
+            background: rgba(255, 51, 102, 1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 51, 102, 0.6);
+        }
+        
+        .generated-wish {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.4rem;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+        }
+        
+        /* 分享区域 */
+        .share-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(to right, #33ccff, #ff3366);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(51, 204, 255, 0.4);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(51, 204, 255, 0.6);
+        }
+        
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .year {
+                font-size: 5rem;
+            }
+            
+            .typing-text {
+                font-size: 1.8rem;
+                min-height: 120px;
+            }
+            
+            .main-message {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            
+            .wish-generator {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 烟花背景 -->
+    <div class="fireworks" id="fireworks"></div>
+    
+    <!-- 飘落的祝福卡片 -->
+    <div class="floating-cards" id="floatingCards"></div>
+    
+    <div class="container">
+        <!-- 顶部标题 -->
+        <header class="header">
+            <h1><i class="fas fa-star"></i> 新年快乐 <i class="fas fa-star"></i></h1>
+            <p>愿新的一年，万事顺遂，平安喜乐</p>
+        </header>
+        
+        <!-- 主要祝福语区域 -->
+        <section class="main-message">
+            <div class="typing-text" id="typingText">
+                祝福正在加载中...
+            </div>
+            <div class="year">2025</div>
+            <p>新的一年，新的开始，新的希望，新的梦想</p>
+        </section>
+        
+        <!-- 祝福语生成器 -->
+        <section class="wish-generator">
+            <h2><i class="fas fa-gift"></i> 祝福语生成器</h2>
+            <p style="text-align: center; margin-bottom: 20px; opacity: 0.9;">点击按钮生成专属新年祝福</p>
+            
+            <div class="wish-buttons">
+                <button class="wish-btn" data-type="health">健康祝福</button>
+                <button class="wish-btn" data-type="wealth">财富祝福</button>
+                <button class="wish-btn" data-type="career">事业祝福</button>
+                <button class="wish-btn" data-type="family">家庭祝福</button>
+                <button class="wish-btn" data-type="luck">好运祝福</button>
+            </div>
+            
+            <div class="generated-wish" id="generatedWish">
+                点击上方按钮生成祝福语
+            </div>
+        </section>
+        
+        <!-- 分享区域 -->
+        <section class="share-section">
+            <button class="share-btn" id="shareBtn">
+                <i class="fas fa-share-alt"></i> 分享新年祝福
+            </button>
+            <p style="margin-top: 15px; opacity: 0.8;">保存此页面或分享链接，将祝福传递给亲朋好友</p>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>新年祝福动画页面 | 设计：HTML + CSS + JavaScript</p>
+            <p>无需服务器，可直接分享给他人查看</p>
+            <p>© 2024-2025 新年快乐</p>
+        </footer>
+    </div>
+
+    <script>
+        // 打字机效果
+        const typingText = document.getElementById('typingText');
+        const messages = [
+            "新年到，福气到，愿你笑口常开，好运连连！",
+            "爆竹声中一岁除，春风送暖入屠苏。千门万户曈曈日，总把新桃换旧符。",
+            "愿新的一年，平安喜乐，万事顺遂，心想事成！",
+            "岁月常新，美好常在，愿新年胜旧年，未来更可期！",
+            "祝您和家人身体健康，阖家幸福，新年快乐！",
+            "愿所有的努力都不被辜负，所有的梦想都能实现！"
+        ];
+        
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeEffect() {
+            const currentMessage = messages[messageIndex];
+            
+            if (!isDeleting && charIndex <= currentMessage.length) {
+                typingText.innerHTML = currentMessage.substring(0, charIndex) + '<span class="cursor"></span>';
+                charIndex++;
+                setTimeout(typeEffect, 100);
+            } else if (isDeleting && charIndex >= 0) {
+                typingText.innerHTML = currentMessage.substring(0, charIndex) + '<span class="cursor"></span>';
+                charIndex--;
+                setTimeout(typeEffect, 50);
+            } else {
+                isDeleting = !isDeleting;
+                if (!isDeleting) {
+                    messageIndex = (messageIndex + 1) % messages.length;
+                }
+                setTimeout(typeEffect, 1200);
+            }
+        }
+        
+        // 烟花效果
+        function createFirework() {
+            const fireworksContainer = document.getElementById('fireworks');
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            
+            // 随机位置
+            firework.style.left = Math.random() * 100 + 'vw';
+            
+            // 随机颜色
+            const colors = ['#ff3366', '#ffcc00', '#33ccff', '#ff66cc', '#66ff99'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.backgroundColor = color;
+            firework.style.boxShadow = `0 0 10px 2px ${color}`;
+            
+            // 随机大小
+            const size = Math.random() * 6 + 3;
+            firework.style.width = `${size}px`;
+            firework.style.height = `${size}px`;
+            
+            // 随机动画时长
+            const duration = Math.random() * 1.5 + 1;
+            firework.style.animationDuration = `${duration}s`;
+            
+            fireworksContainer.appendChild(firework);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                firework.remove();
+            }, duration * 1000);
+        }
+        
+        // 持续创建烟花
+        function startFireworks() {
+            setInterval(createFirework, 200);
+        }
+        
+        // 飘落的祝福卡片
+        function createFloatingCard() {
+            const container = document.getElementById('floatingCards');
+            const card = document.createElement('div');
+            card.classList.add('floating-card');
+            
+            // 随机祝福语
+            const wishes = [
+                "新年快乐！",
+                "万事如意！",
+                "恭喜发财！",
+                "身体健康！",
+                "阖家幸福！",
+                "步步高升！",
+                "心想事成！",
+                "吉祥如意！",
+                "福星高照！",
+                "笑口常开！"
+            ];
+            
+            const wish = wishes[Math.floor(Math.random() * wishes.length)];
+            card.textContent = wish;
+            
+            // 随机位置
+            card.style.left = Math.random() * 100 + 'vw';
+            
+            // 随机颜色
+            const colors = ['rgba(255, 51, 102, 0.8)', 'rgba(255, 204, 0, 0.8)', 'rgba(51, 204, 255, 0.8)'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            card.style.backgroundColor = color;
+            
+            // 随机动画时长
+            const duration = Math.random() * 10 + 15;
+            card.style.animationDuration = `${duration}s`;
+            
+            container.appendChild(card);
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                card.remove();
+            }, duration * 1000);
+        }
+        
+        // 持续创建飘落卡片
+        function startFloatingCards() {
+            setInterval(createFloatingCard, 1500);
+        }
+        
+        // 祝福语生成器
+        const wishButtons = document.querySelectorAll('.wish-btn');
+        const generatedWish = document.getElementById('generatedWish');
+        
+        const wishCategories = {
+            health: [
+                "愿您新的一年身体健康，精神饱满，活力无限！",
+                "祝福您身体强健，远离疾病，每天都充满活力！",
+                "愿健康与您相伴，快乐与您相随，幸福与您相守！"
+            ],
+            wealth: [
+                "恭喜发财！愿您财源广进，事业兴旺，财富滚滚来！",
+                "新的一年，愿您收入翻倍，存款增长，财务自由！",
+                "祝福您投资顺利，生意兴隆，财源茂盛达三江！"
+            ],
+            career: [
+                "愿您事业蒸蒸日上，工作顺利，步步高升！",
+                "新的一年，祝您职场得意，升职加薪，成就非凡！",
+                "愿您事业有成，前程似锦，大展宏图！"
+            ],
+            family: [
+                "祝您家庭和睦，亲情浓浓，幸福美满！",
+                "愿您和家人团聚欢乐，温馨相伴，平安健康！",
+                "新的一年，愿您阖家欢乐，幸福安康，万事如意！"
+            ],
+            luck: [
+                "好运连连！愿幸运之神常伴您左右！",
+                "新的一年，愿您好运不断，惊喜连连，心想事成！",
+                "祝福您吉星高照，福气满满，万事顺心！"
+            ]
+        };
+        
+        wishButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                const wishes = wishCategories[type];
+                const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+                
+                // 添加动画效果
+                generatedWish.style.transform = 'scale(0.95)';
+                generatedWish.style.opacity = '0.7';
+                
+                setTimeout(() => {
+                    generatedWish.textContent = randomWish;
+                    generatedWish.style.transform = 'scale(1)';
+                    generatedWish.style.opacity = '1';
+                }, 200);
+            });
+        });
+        
+        // 分享功能
+        const shareBtn = document.getElementById('shareBtn');
+        
+        shareBtn.addEventListener('click', function() {
+            // 复制当前URL到剪贴板
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                // 显示提示
+                const originalText = shareBtn.innerHTML;
+                shareBtn.innerHTML = '<i class="fas fa-check"></i> 链接已复制！';
+                shareBtn.style.background = 'linear-gradient(to right, #66ff99, #33ccff)';
+                
+                setTimeout(() => {
+                    shareBtn.innerHTML = originalText;
+                    shareBtn.style.background = 'linear-gradient(to right, #33ccff, #ff3366)';
+                }, 2000);
+            }).catch(err => {
+                // 如果复制失败，提示用户手动复制
+                alert("请手动复制此链接分享给朋友:\n\n" + url);
+            });
+        });
+        
+        // 页面加载完成后启动所有动画
+        window.addEventListener('load', () => {
+            // 启动打字机效果
+            setTimeout(typeEffect, 1000);
+            
+            // 启动烟花效果
+            startFireworks();
+            
+            // 启动飘落卡片效果
+            startFloatingCards();
+            
+            // 添加一些初始烟花
+            for(let i = 0; i < 20; i++) {
+                setTimeout(() => createFirework(), i * 100);
+            }
+            
+            // 添加一些初始飘落卡片
+            for(let i = 0; i < 8; i++) {
+                setTimeout(() => createFloatingCard(), i * 300);
+            }
+        });
+    </script>
+</body>
+</html>
